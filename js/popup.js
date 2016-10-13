@@ -2,12 +2,6 @@
  * Created by eloipr on 12/10/16.
  */
 
-function click(e) {
-    /*chrome.tabs.executeScript(null,
-        {code:"document.body.style.backgroundColor='" + e.target.id + "'"});*/
-
-    //window.close();
-}
 var conn;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -16,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         /*var url = document.querySelector("#url").value;
         chrome.tabs.create({"url": url}, null);*/
         var destPeerId = document.querySelector("#url").value;
-        conn = peer.connect(destPeerId);
+
     });
     var select = document.getElementById("deviceSelect");
     chrome.sessions.getDevices(null, function(devices) {
@@ -37,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('My peer ID is: ' + id);
     });
 
-
+    conn = peer.connect(destPeerId);
     peer.on('connection', function(conn) {
         conn.on('open', function () {
             // Receive messages
@@ -50,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
             conn.send('Hello!');
         });
     });
+
+
+
 
 });
 
