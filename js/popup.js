@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     peer.on('connection', function(conn) {
         conn.on('open', function () {
             // Receive messages
+            console.log("connection openetd");
             conn.on('data', function (data) {
                 console.log('Received', data);
             });
