@@ -4,25 +4,29 @@ function destroyPeer() {
     if (peer) peer.destroy();
 }
 
+function connect(c) {
+    c.on("data", function(data) {
+        console.log(data);
+        c.close();
+    });
+}
+
 function createPeer(id) {
     peer = new Peer(id, {key: 'utolyaz0e75jyvi'});
     peer.on('open', function(id) {
         console.log('My peer ID is: ' + id);
     });
+    peer.on('error', function(err) {
+        console.log(err.type);
+    });
+    peer.on('connection', connect);
 }
 
 function send(destPeerId, url) {
-    var conn = peer.connect(destPeerId);
-
-    conn.on('open', function() {
-        // Receive messages
-        console.log("connection opened");
-        conn.on('data', function(data) {
-            console.log('Received', data);
-        });
-
-        // Send messages
-        conn.send('Hello!'); //url
+    var c = peer.connect(destPeerId);
+    c.on('open', function() {
+        connect(c);
+        c.send("hola"); //url
     });
 }
 
