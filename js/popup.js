@@ -24,7 +24,11 @@ function setListeners() {
     });
     $("#send").click(function(event) {
         var destPeerId = $("select").val();
-        background.send(destPeerId, null);
+        var url = "";
+        chrome.tabs.getCurrent(function(tab){
+            url = tab.url;
+        });
+        background.send(destPeerId, url);
     });
 
     $("#changeUser").click(function(event) {
