@@ -1,16 +1,15 @@
 {
   "name": "LinkSender",
   "description": "Open tabs in other chrome sessions",
+  "manifest_version": 2,
   "version": "0.6",
   "browser_action": {
       "default_popup": "/html/popup.html"
   },
   "background": {
-      "scripts": [ "/js/background.js" ]
+      "scripts": [ "/js/background.js", "/js/peer.js", "/js/jquery-3.1.1.js" ]
   },
-  "omnibox": { "keyword": "omnix" },
-  "manifest_version": 2,
   "permissions": [
-      "sessions", "tabs", "http://*/*", "https://*/*"
+      "background", "storage", "sessions", "tabs", "http://*/*", "https://*/*"
   ]
 }

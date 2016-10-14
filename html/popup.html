@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Send Link Popup</title>
+    <script src="/../js/jquery-3.1.1.js"></script>
     <script src="/../js/peer.js"></script>
     <script src="/../js/popup.js"></script>
 
 </head>
 <body>
-    <div>
-        <input id="url" type="text" name="link">
-        <select id="deviceSelect">
-        </select>
+    <div id="popup">
+        <input id="friendName" type="text" name="link">
+        <button id="addFriend" type="button">Add Friend</button>
+        <select id="friends"></select>
         <input id="send" type="button" value="send">
+        <p></p>
+        <button id="changeUser" type="button">change username</button>
     </div>
 
 </body>
