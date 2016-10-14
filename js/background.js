@@ -30,7 +30,7 @@ function send(destPeerId, url) {
     c.on('open', function() {
         console.log("opened connection");
         connect(c);
-        c.send("hola"); //url
+        c.send(url);
     });
 }
 
