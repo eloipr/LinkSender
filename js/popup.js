@@ -25,8 +25,8 @@ function setListeners() {
     $("#send").click(function(event) {
         var destPeerId = $("select").val();
         var url = "";
-        chrome.tabs.getCurrent(function(tab){
-            url = tab.url;
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+            url = tabs[0].url;
         });
         background.send(destPeerId, url);
     });
