@@ -9,6 +9,9 @@ function connect(c) {
         console.log(data);
         c.close();
     });
+    c.on("close", function() {
+        console.log("conncection closed");
+    })
 }
 
 function createPeer(id) {
@@ -25,6 +28,7 @@ function createPeer(id) {
 function send(destPeerId, url) {
     var c = peer.connect(destPeerId);
     c.on('open', function() {
+        console.log("opened connection");
         connect(c);
         c.send("hola"); //url
     });
