@@ -27,8 +27,8 @@ function setListeners() {
         var url = "";
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
             url = tabs[0].url;
+            background.send(destPeerId, url);
         });
-        background.send(destPeerId, url);
     });
 
     $("#changeUser").click(function(event) {
