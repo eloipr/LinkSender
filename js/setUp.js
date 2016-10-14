@@ -12,11 +12,14 @@ var background = chrome.extension.getBackgroundPage();
 $(document).ready(function () {
     $("#ok").click(function(event) {
         var username = $("#user").val();
-        chrome.storage.local.set({"id": username}, function(bytes){});
-        //chrome.browserAction.setPopup({popup: "../html/popup.html"});
-        background.peer.destroy();
-        background.peer = new Peer(username, {key: 'utolyaz0e75jyvi'});
-        window.location.href="../html/popup.html";
+        if (username != null) {
+            chrome.storage.local.set({"id": username}, function(bytes){});
+            //background.peer.destroy();
+            background.peer = new Peer(username, {key: 'utolyaz0e75jyvi'});
+            chrome.browserAction.setPopup({popup: "../html/popup.html"});
+            window.location.href="../html/popup.html";
+        }
+
     });
 });
 

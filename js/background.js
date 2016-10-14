@@ -6,7 +6,7 @@ chrome.storage.local.get("id", function(result) {
         //chrome.storage.local.remove(["id", "friends"]);
     }
     else {
-        window.location.href="../html/setUp.html";
+        chrome.browserAction.setPopup({popup: "../html/setUp.html"});
     }
 });
 
