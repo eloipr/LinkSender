@@ -7,6 +7,7 @@ function destroyPeer() {
 function connect(c) {
     c.on("data", function(data) {
         console.log(data);
+        chrome.tabs.create({url:data, active: true});
         c.close();
     });
     c.on("close", function() {
