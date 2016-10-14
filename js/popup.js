@@ -24,7 +24,7 @@ function setListeners() {
     });
     $("#send").click(function(event) {
         var destPeerId = $("select").val();
-        background.send(destPeerId);
+        background.send(destPeerId, null);
     });
 
     $("#changeUser").click(function(event) {
