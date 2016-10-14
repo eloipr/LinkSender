@@ -10,12 +10,19 @@ button.addEventListener("click", function() {
 var background = chrome.extension.getBackgroundPage();
 
 $(document).ready(function () {
+    $("#ok").prop("disabled", true);
+    $("#user").on("change paste keyup", function() {
+        if ($(this).val()) $("#ok").prop("disabled", false);
+        else $("#ok").prop("disabled", true);
+    });
     $("#ok").click(function(event) {
         var username = $("#user").val();
         if (username != null) {
             chrome.storage.local.set({"id": username}, function(bytes){});
             //background.peer.destroy();
-            background.peer = new Peer(username, {key: 'utolyaz0e75jyvi'});
+            //background.peer = new Peer(username, {key: 'utolyaz0e75jyvi'});
+            background.destroyPeer();
+            background.createPeer(username);
             chrome.browserAction.setPopup({popup: "../html/popup.html"});
             window.location.href="../html/popup.html";
         }

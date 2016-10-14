@@ -3,39 +3,29 @@
  */
 var background = chrome.extension.getBackgroundPage();
 var friends = [];
-var conn;
 
-$(document).ready(function () {
-    //chrome.browserAction.setPopup({popup: "../html/popup.html"});
-    chrome.storage.local.get("friends", function(result) {
-        if (result.hasOwnProperty("friends")) {
-            friends = result.friends;
-            refreshFriends();
-        }
+function refreshFriends() {
+    var select = $("#friends");
+    select.empty();
+    for (var i = 0; i < friends.length; i++) {
+        select.append($("<option/>", {
+            "text": friends[i],
+            "value": friends[i]
+        }));
+    }
+    if (select.val()) $("#send").prop("disabled", false);
+    else $("#send").prop("disabled", true);
+}
+
+function setListeners() {
+    $("#friendName").on("change paste keyup", function() {
+        if ($(this).val()) $("#addFriend").prop("disabled", false);
+        else $("#addFriend").prop("disabled", true);
     });
-
-    background.peer.on('connection', function(dconn) {
-        dconn.on('open', function () {
-            // Receive messages
-            console.log("connection opened");
-            dconn.on('data', function (data) {
-                console.log('Received', data);
-                //obrir link
-            });
-
-            // Send messages
-            dconn.send('Hello!');
-        });
-    });
-
     $("#send").click(function(event) {
-        conn = background.peer.connect($("select").val());
-        conn.on("open", function() {
-            conn.send("hello");
-        });
+        var destPeerId = $("select").val();
+        background.send(destPeerId);
     });
-
-    $("p").text("username: " + background.peer.id);
 
     $("#changeUser").click(function(event) {
         window.location.href="../html/setUp.html";
@@ -49,16 +39,25 @@ $(document).ready(function () {
             chrome.storage.local.set({"friends": friends}, function(bytes){});
             refreshFriends();
         }
+        $(this).prop("disabled", true);
     });
-});
 
-function refreshFriends() {
-    var select = $("#friends");
-    select.empty();
-    for (var i = 0; i < friends.length; i++) {
-        select.append($("<option/>", {
-            "text": friends[i],
-            "value": friends[i]
-        }));
-    }
 }
+
+$(document).ready(function () {
+    $("#addFriend").prop("disabled", true);
+    $("#send").prop("disabled", true);
+    setListeners();
+
+    chrome.storage.local.get([ "id", "friends" ], function(result) {
+        if (result.hasOwnProperty("friends")) {
+            friends = result.friends;
+            refreshFriends();
+        }
+        if (result.hasOwnProperty("id")) {
+            $("p").text("username: " + result.id);
+        }
+    });
+
+
+});
