@@ -20,22 +20,37 @@ $(document).ready(function () {
         console.log('My peer ID is: ' + id);
     });*/
 
-    background.peer.on('connection', function(dconn) {
+    /*background.peer.on('connection', function(dconn) {
         dconn.on('open', function () {
             // Receive messages
             console.log("connection opened");
             dconn.on('data', function (data) {
                 console.log('Received', data);
+                //obrir link
             });
 
             // Send messages
             dconn.send('Hello!');
         });
+    });*/
+
+    conn.on('open', function () {
+        // Receive messages
+        console.log("connection opened");
+        conn.on('data', function (data) {
+            console.log('Received', data);
+            //obrir link
+        });
+
+        // Send messages
+        conn.send('Hello!');
     });
 
     $("#send").click(function(event) {
         conn = background.peer.connect($("select").val());
-        conn.send("hello");
+        /*conn.on("open", function() {
+            conn.send("hello");
+        });*/
     });
 
     $("p").text("username: " + background.peer.id);
