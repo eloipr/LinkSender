@@ -7,7 +7,7 @@
       "default_popup": "/html/popup.html"
   },
   "background": {
-      "scripts": [ "/js/background.js", "/js/peer.js", "/js/jquery-3.1.1.js" ]
+      "scripts": [ "/js/peer.js", "/js/background.js" ]
   },
   "permissions": [
       "background", "storage", "sessions", "tabs", "http://*/*", "https://*/*"
