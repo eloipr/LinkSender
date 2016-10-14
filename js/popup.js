@@ -9,16 +9,16 @@ $(document).ready(function () {
     //chrome.browserAction.setPopup({popup: "../html/popup.html"});
     chrome.storage.local.get("friends", function(result) {
         if (result.hasOwnProperty("friends")) {
-            result.friends = friends;
+            friends = result.friends;
             refreshFriends();
         }
     });
 
 
 
-    background.peer.on('open', function(id) {
+    /*background.peer.on('open', function(id) {
         console.log('My peer ID is: ' + id);
-    });
+    });*/
 
     background.peer.on('connection', function(dconn) {
         dconn.on('open', function () {
@@ -31,7 +31,12 @@ $(document).ready(function () {
             // Send messages
             dconn.send('Hello!');
         });
-    })
+    });
+
+    $("#send").click(function(event) {
+        conn = background.peer.connect($("select").val());
+    });
+
     $("p").text("username: " + background.peer.id);
 
     $("#changeUser").click(function(event) {
