@@ -35,6 +35,7 @@ $(document).ready(function () {
 
     $("#send").click(function(event) {
         conn = background.peer.connect($("select").val());
+        conn.send("hello");
     });
 
     $("p").text("username: " + background.peer.id);
