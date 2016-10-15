@@ -18,15 +18,12 @@ $(document).ready(function () {
     $("#ok").click(function(event) {
         var username = $("#user").val();
         if (username != null) {
-            chrome.storage.local.set({"id": username}, function(bytes){});
-            //background.peer.destroy();
-            //background.peer = new Peer(username, {key: 'utolyaz0e75jyvi'});
+            chrome.storage.local.set({"id": username}, function (bytes) {});
             background.destroyPeer();
             background.createPeer(username);
             chrome.browserAction.setPopup({popup: "../html/popup.html"});
-            window.location.href="../html/popup.html";
+            window.location.href = "../html/popup.html";
         }
-
     });
 });
 

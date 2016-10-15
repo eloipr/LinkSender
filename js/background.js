@@ -1,4 +1,5 @@
 var peer;
+var correctId;
 
 function destroyPeer() {
     if (peer) peer.destroy();
@@ -16,12 +17,17 @@ function connect(c) {
 }
 
 function createPeer(id) {
+    correctId = 0;
     peer = new Peer(id, {key: 'utolyaz0e75jyvi'});
     peer.on('open', function(id) {
+        correctId = 1;
         console.log('My peer ID is: ' + id);
     });
     peer.on('error', function(err) {
         console.log(err.type);
+        if (err.type == "unavailable-id") {
+            correctId = -1;
+        }
     });
     peer.on('connection', connect);
 }
@@ -44,5 +50,13 @@ chrome.storage.local.get("id", function(result) {
     else {
         chrome.browserAction.setPopup({popup: "../html/setUp.html"});
     }
+});
+
+chrome.windows.onRemoved.addListener(function(windowId) {
+    chrome.windows.getAll({windowTypes: ["normal"]}, function(windows) {
+        alert(windows.length);
+        if (windows.length == 0) destroyPeer();
+    });
+    alert("!! Exiting the Browser !!");
 });
 

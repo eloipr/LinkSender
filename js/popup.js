@@ -15,6 +15,8 @@ function refreshFriends() {
     }
     if (select.val()) $("#send").prop("disabled", false);
     else $("#send").prop("disabled", true);
+    $('#friends').material_select();
+
 }
 
 function setListeners() {
@@ -49,6 +51,7 @@ function setListeners() {
 }
 
 $(document).ready(function () {
+    $('#friends').material_select();
     $("#addFriend").prop("disabled", true);
     $("#send").prop("disabled", true);
     setListeners();
@@ -59,7 +62,13 @@ $(document).ready(function () {
             refreshFriends();
         }
         if (result.hasOwnProperty("id")) {
-            $("p").text("username: " + result.id);
+            var text = "username: " + result.id;
+            var userTag = $("<div/>", {
+                "id": "userTag",
+                "class": "card-panel teal lighten-2"
+            });
+            userTag.append("<span>" + text + "</span>");
+            $("body").prepend(userTag);
         }
     });
 
