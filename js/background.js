@@ -1,5 +1,4 @@
 var peer;
-var correctId;
 
 function destroyPeer() {
     if (peer) peer.destroy();
@@ -8,7 +7,7 @@ function destroyPeer() {
 function connect(c) {
     c.on("data", function(data) {
         console.log(data);
-        chrome.tabs.create({url:data, active: true});
+        if (confirm("Link received, do you want to open it?")) chrome.tabs.create({url:data, active: true});
         c.close();
     });
     c.on("close", function() {
@@ -17,16 +16,16 @@ function connect(c) {
 }
 
 function createPeer(id) {
-    correctId = 0;
     peer = new Peer(id, {key: 'utolyaz0e75jyvi'});
     peer.on('open', function(id) {
-        correctId = 1;
+        chrome.runtime.sendMessage({isAvailable: true});
         console.log('My peer ID is: ' + id);
     });
     peer.on('error', function(err) {
         console.log(err.type);
         if (err.type == "unavailable-id") {
-            correctId = -1;
+            alert("Unavailabe id");
+            chrome.runtime.sendMessage({isAvailable: false});
         }
     });
     peer.on('connection', connect);
